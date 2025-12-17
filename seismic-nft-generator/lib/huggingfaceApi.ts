@@ -10,7 +10,7 @@ export class HuggingFaceClient {
   }
 
   /**
-   * Generate NFT image based on profile analysis
+   * Generate NFT image based on profile analysis and user's PFP
    */
   async generateNFTImage(analysis: ProfileAnalysis): Promise<Blob> {
     const prompt = this.constructPrompt(analysis);
@@ -67,7 +67,7 @@ export class HuggingFaceClient {
   }
 
   /**
-   * Construct Web3 NFT-style prompt using configuration
+   * Construct Web3 NFT-style prompt with Seismic branding
    */
   private constructPrompt(
     analysis: ProfileAnalysis, 
@@ -78,42 +78,93 @@ export class HuggingFaceClient {
     // Get configuration for this personality
     const config = getPromptConfig(personality);
 
-    // Start with base art style
-    let prompt = customStyle || config.artStyle;
+    // Validate config has required properties
+    if (!config || !config.artStyle) {
+      console.error('Invalid prompt config:', config);
+      throw new Error('Failed to generate prompt configuration');
+    }
+
+    // Start with PFP composition rules
+    let prompt = '';
+    if (NFTConfig.composition) {
+      prompt = `${NFTConfig.composition.framing}, ${NFTConfig.composition.focus}, ${NFTConfig.composition.style}, `;
+    }
+
+    // Base art style
+    prompt += customStyle || config.artStyle;
     prompt += ', ';
 
-    // Add character description
-    prompt += `NFT character avatar for @${profile.username}, `;
-    
-    // Add personality-based features
+    // Character description based on profile
+    prompt += this.describeCharacterFromProfile(profile);
+    prompt += ', ';
+
+    // Add personality-based features with Seismic branding
     prompt += `${config.features.outfit}, `;
     prompt += `${config.features.accessories}, `;
     prompt += `${config.features.expression}, `;
     prompt += `${config.features.pose}, `;
+    prompt += `${config.features.special}, `;
 
-    // Add topic-based elements
+    // Strong Seismic branding integration
+    prompt += `${config.branding.logo}, `;
+    prompt += `${config.branding.crystal}, `;
+    prompt += `${config.branding.patterns}, `;
+    prompt += `${config.branding.effects}, `;
+    prompt += `${config.branding.brandColors}, `;
+
+    // Add topic-based elements with Seismic branding
     const topicElements = this.getTopicElements(personality.topics);
     if (topicElements) {
       prompt += `${topicElements}, `;
     }
 
-    // Add color scheme
+    // Background selection
+    const background = this.selectBackground(personality);
+    prompt += `${background}, `;
+
+    // Color scheme
     prompt += `${config.colors}, `;
 
-    // Add engagement effects
+    // Engagement effects
     prompt += `${config.effects}, `;
 
-    // Add Seismic branding
-    prompt += `${NFTConfig.seismicBranding.element} in ${NFTConfig.seismicBranding.placement}, ${NFTConfig.seismicBranding.style}, `;
-
-    // Add quality modifiers
+    // Quality modifiers
     prompt += NFTConfig.qualityModifiers;
 
     return prompt;
   }
 
   /**
-   * Get topic-based visual elements from config
+   * Describe character based on profile image and details
+   */
+  private describeCharacterFromProfile(profile: any): string {
+    // Analyze username and bio for character hints
+    const username = profile.username.toLowerCase();
+    const bio = profile.description.toLowerCase();
+    
+    let characterDesc = 'unique character avatar inspired by user profile';
+
+    // Add personality hints from username
+    if (username.includes('dev') || username.includes('tech')) {
+      characterDesc += ', tech-savvy appearance, developer vibes';
+    }
+    if (username.includes('art') || username.includes('design')) {
+      characterDesc += ', creative artistic look, designer aesthetic';
+    }
+    if (username.includes('crypto') || username.includes('web3')) {
+      characterDesc += ', crypto enthusiast style, Web3 native look';
+    }
+
+    // Add verified badge effect if verified
+    if (profile.verified) {
+      characterDesc += ', premium verified aura, elite status glow';
+    }
+
+    return characterDesc;
+  }
+
+  /**
+   * Get topic-based visual elements with Seismic branding
    */
   private getTopicElements(topics: string[]): string {
     const elements: string[] = [];
@@ -123,14 +174,37 @@ export class HuggingFaceClient {
       if (topicConfig) {
         elements.push(topicConfig.background);
         elements.push(topicConfig.effects);
+        elements.push(topicConfig.accessories);
       }
     });
 
-    return elements.slice(0, 2).join(', ');
+    return elements.slice(0, 3).join(', ');
   }
 
   /**
-   * Convert Blob to base64 (for client-side use)
+   * Select appropriate background
+   */
+  private selectBackground(personality: any): string {
+    const backgrounds = NFTConfig.backgrounds;
+    
+    switch (personality.tone) {
+      case 'professional':
+        return backgrounds.gradient;
+      case 'casual':
+        return backgrounds.urban;
+      case 'humorous':
+        return backgrounds.solid;
+      case 'inspirational':
+        return backgrounds.cosmic;
+      case 'technical':
+        return backgrounds.geometric;
+      default:
+        return backgrounds.gradient;
+    }
+  }
+
+  /**
+   * Convert Blob to base64
    */
   async blobToBase64(blob: Blob): Promise<string> {
     const arrayBuffer = await blob.arrayBuffer();

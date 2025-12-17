@@ -46,7 +46,7 @@ export class XApiClient {
         verified: user.verified || false,
       };
     } catch (error) {
-      console.error('Error fetching X profile:', error.response?.data || error.message);
+      console.error('Error fetching X profile:', error);
       throw new Error('Failed to fetch X profile');
     }
   }
@@ -61,9 +61,9 @@ export class XApiClient {
         {
           headers: this.getHeaders(),
           params: {
-            max_results: maxResults,
+            'max_results': maxResults,
             'tweet.fields': 'created_at,public_metrics',
-            exclude: 'retweets,replies',
+            'exclude': 'retweets,replies',
           },
         }
       );
