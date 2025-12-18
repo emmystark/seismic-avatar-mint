@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { ProfileAnalysis, NFTMetadata } from '@/types';
+import NFTCard from '@/components/NFTCard';
 
 export default function GeneratePage() {
   const [username, setUsername] = useState('');
@@ -186,34 +187,32 @@ export default function GeneratePage() {
 
         {/* Complete Step */}
         {step === 'complete' && nft && analysis && (
-          <div className="max-w-6xl mx-auto">
-            <h1 className="text-4xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
-              Your Seismic NFT is Ready! 🎉
+          <div className="max-w-7xl mx-auto">
+            <h1 className="text-5xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 animate-pulse">
+              Your Seismic Card is Ready! ⚡
             </h1>
 
-            <div className="grid lg:grid-cols-2 gap-8">
-              {/* Left: NFT Image */}
-              <div className="bg-gradient-to-br from-purple-900/50 to-blue-900/50 backdrop-blur-md rounded-2xl p-1 border border-purple-500/30">
-                <div className="bg-black/40 rounded-xl p-6">
-                  <img 
-                    src={nft.imageUrl} 
-                    alt={nft.name}
-                    className="w-full aspect-square rounded-lg mb-6 object-cover"
-                  />
-                  <div className="flex gap-4">
-                    <button
-                      onClick={handleDownload}
-                      className="flex-1 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-3 rounded-lg transition-all"
-                    >
-                      ⬇️ Download NFT
-                    </button>
-                    <button
-                      onClick={handleReset}
-                      className="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-3 rounded-lg transition-all"
-                    >
-                      🔄 New NFT
-                    </button>
-                  </div>
+            <div className="grid lg:grid-cols-2 gap-12 items-start">
+              {/* Left: NFT Card Display */}
+              <div className="flex flex-col gap-6">
+                <NFTCard nft={nft} analysis={analysis} />
+                
+                {/* Action Buttons */}
+                <div className="flex gap-4">
+                  <button
+                    onClick={handleDownload}
+                    className="flex-1 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-4 rounded-xl transition-all transform hover:scale-105 shadow-lg flex items-center justify-center gap-2"
+                  >
+                    <span className="text-xl">⬇️</span>
+                    Download Card
+                  </button>
+                  <button
+                    onClick={handleReset}
+                    className="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-4 rounded-xl transition-all transform hover:scale-105 shadow-lg flex items-center justify-center gap-2"
+                  >
+                    <span className="text-xl">🔄</span>
+                    Create New
+                  </button>
                 </div>
               </div>
 
@@ -285,7 +284,7 @@ export default function GeneratePage() {
                 </div>
 
                 {/* Seismic Activity (Mock Data - Replace with real data) */}
-                {/* <div className="bg-gradient-to-br from-purple-500/20 to-blue-500/20 backdrop-blur-md rounded-xl p-6 border border-purple-500/30">
+                <div className="bg-gradient-to-br from-purple-500/20 to-blue-500/20 backdrop-blur-md rounded-xl p-6 border border-purple-500/30">
                   <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
                     ⚡ Seismic Activity
                   </h3>
@@ -308,7 +307,7 @@ export default function GeneratePage() {
                       Member since {new Date(analysis.profile.createdAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
                     </p>
                   </div>
-                </div> */}
+                </div>
 
                 {/* NFT Traits */}
                 <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20">
