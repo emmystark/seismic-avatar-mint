@@ -1,255 +1,219 @@
 /**
- * NFT GENERATION CONFIG - WEB3 OPTIMIZED
- * 
- * Designed for authentic Web3 NFT aesthetics with strong Seismic branding
- * Style inspired by successful NFT collections with unique character variations
+ * NFT GENERATION CONFIG - ANIME CARD STYLE (Monad Inspired)
+ *
+ * Optimized for anime-style character cards like Monad Cards
+ * Clean anime aesthetic with personality-based variations
  */
-
 export const NFTConfig = {
   /**
    * GENERATION PARAMETERS
-   * Optimized for clean, iconic Web3 PFP style
+   * Optimized for anime character style
+   * Added img2img settings to transform user's PFP into NFT-style image
+   * Use with init_image set to the user's PFP (local path or URL, depending on your setup)
+   * Model: v1-5-pruned-emaonly.safetensors (run locally with Stable Diffusion)
+   * For img2img mode: strength controls how much to change the original PFP (0.0 = no change, 1.0 = full generation)
    */
   generationParams: {
-    numInferenceSteps: 45,
-    guidanceScale: 9.5,      // Higher for more accurate character rendering
-    width: 1024,
-    height: 1024,
+    numInferenceSteps: 25,
+    guidanceScale: 8.0,
+    width: 512,
+    height: 512,
+    strength: 0.75, // Denoising strength for img2img; adjust based on how much to stylize the PFP (lower = closer to original)
+    // initImage: 'path/to/user_pfp.jpg' // Set this to the user's PFP file path or URL in your local generation script
   },
-
   /**
-   * BASE ART STYLES - WEB3 FOCUSED
-   * Clean, iconic styles that work as PFPs
+   * BASE ART STYLES - ANIME FOCUSED
+   * Clean anime character art that works as PFPs
    */
   artStyles: {
-    professional: 'professional NFT avatar art, clean vector style, bold colors, thick outlines, Web3 aesthetic, corporate cool vibe, sharp details, iconic design',
-    casual: 'street style NFT character, urban cool aesthetic, bold graphic design, trendy outfit, confident pose, collectible art style, vibrant colors',
-    humorous: 'playful cartoon NFT avatar, fun expressive character, bold comic style, exaggerated cute features, bright cheerful colors, meme-worthy design',
-    inspirational: 'mystical NFT character art, cosmic vibes, glowing elements, spiritual aesthetic, fantasy NFT style, magical atmosphere, ethereal beauty',
-    technical: 'futuristic cyborg NFT avatar, tech-enhanced character, cyberpunk aesthetic, neon accents, digital elements, sci-fi Web3 style, sleek modern design',
+    professional: 'anime character portrait, business professional style, sharp suit, confident CEO look, clean anime art style, bold cel shading, defined outlines',
+    casual: 'anime character portrait, casual streetwear style, relaxed cool vibe, modern anime aesthetic, vibrant colors, urban fashion',
+    humorous: 'anime character portrait, funny comedic expression, exaggerated features, playful anime style, bright cheerful colors, meme energy',
+    inspirational: 'anime character portrait, wise mentor aesthetic, serene expression, mystical vibes, fantasy anime style, magical elements',
+    technical: 'anime character portrait, tech genius style, cyberpunk aesthetic, futuristic elements, sci-fi anime design, holographic details',
   },
-
   /**
-   * CHARACTER FEATURES - WEB3 STYLE
-   * Based on successful NFT collections
+   * CHARACTER FEATURES - ANIME STYLE
+   * Inspired by successful anime NFT collections
    */
   characterFeatures: {
     professional: {
-      outfit: 'sharp designer suit with Seismic logo pin on lapel, luxury business attire, executive style',
-      accessories: 'Seismic branded smart glasses with purple glow, expensive watch, diamond earrings, gold chain',
-      expression: 'confident smirk, determined eyes, boss energy, charismatic look',
-      pose: 'power stance facing forward, arms crossed, commanding presence',
-      special: 'Seismic purple aura surrounding character, glowing crystal embedded in forehead',
+      outfit: 'sharp business suit, Seismic logo pin on lapel, executive tie, professional attire',
+      accessories: 'designer glasses, expensive watch, briefcase with Seismic emblem',
+      expression: 'confident smirk, determined eyes, professional aura',
+      pose: 'power pose, arms crossed, commanding presence',
+      special: 'purple Seismic energy aura, glowing crystal emblem on chest',
+      hairStyle: 'slicked back professional hair, clean corporate style',
     },
     casual: {
-      outfit: 'Seismic branded hoodie with large logo, streetwear aesthetic, limited edition sneakers, gold chains',
-      accessories: 'Seismic cap with embroidered logo, designer sunglasses, NFT collection pendant, smartphone with Seismic case',
-      expression: 'cool relaxed smile, confident eyes, laid-back vibe, street cred',
-      pose: 'casual lean, one hand in pocket, other making peace sign or holding phone',
-      special: 'Seismic purple energy trails from hands, floating Seismic logos in background',
+      outfit: 'Seismic branded hoodie with large logo, streetwear jacket, trendy outfit',
+      accessories: 'Seismic cap, designer headphones, chain with crystal pendant',
+      expression: 'cool relaxed smile, confident look, chill vibes',
+      pose: 'casual stance, hands in pockets, laid-back energy',
+      special: 'purple energy trails, floating Seismic symbols',
+      hairStyle: 'messy stylish hair, modern casual look',
     },
     humorous: {
-      outfit: 'funny Seismic mascot costume, oversized Seismic branded t-shirt, colorful accessories, party vibes',
-      accessories: 'Seismic novelty glasses, purple party hat with logo, confetti with Seismic symbols, foam finger',
-      expression: 'big goofy grin, tongue out, winking, silly excited face',
-      pose: 'dynamic silly gesture, jumping pose, hands up celebrating, playful stance',
-      special: 'Seismic sparkles and stars bursting around character, comic effects',
+      outfit: 'funny costume, oversized Seismic t-shirt, colorful accessories',
+      accessories: 'comedy glasses, party hat with logo, confetti effects',
+      expression: 'big grin, tongue out, playful wink',
+      pose: 'silly gesture, jumping pose, comedic stance',
+      special: 'sparkles and stars, comic effects, Seismic glow',
+      hairStyle: 'wild crazy hair, exaggerated anime style',
     },
     inspirational: {
-      outfit: 'mystical robes with Seismic crystal patterns, flowing ethereal garments, glowing symbols',
-      accessories: 'Seismic crystal staff glowing purple, floating Seismic runes, magical amulet with logo, halo effect',
-      expression: 'serene wise eyes, peaceful smile, enlightened aura, inner light',
-      pose: 'meditation pose floating, arms raised channeling energy, spiritual stance',
-      special: 'Seismic purple cosmic energy swirling, geometric Seismic patterns in background',
+      outfit: 'mystical robes with Seismic patterns, flowing garments, spiritual attire',
+      accessories: 'glowing crystal staff, magical amulet, halo effect',
+      expression: 'serene wise eyes, peaceful smile, enlightened look',
+      pose: 'meditation pose, arms raised, spiritual stance',
+      special: 'purple cosmic energy, geometric Seismic mandalas',
+      hairStyle: 'flowing elegant hair, mystical aesthetic',
     },
     technical: {
-      outfit: 'futuristic tech suit with Seismic logo hologram, cybernetic enhancements, LED-lit armor',
-      accessories: 'Seismic holographic visor with purple interface, robotic arm with logo, tech implants glowing purple',
-      expression: 'focused intense gaze, determined look, tech-enhanced eyes glowing',
-      pose: 'dynamic tech pose, interacting with Seismic holographic interface, action stance',
-      special: 'Seismic data streams and circuit patterns, purple digital glitch effects',
+      outfit: 'futuristic tech suit, cybernetic enhancements, LED armor with Seismic logo',
+      accessories: 'holographic visor, robotic arm, tech implants',
+      expression: 'focused intense gaze, determined look, tech-enhanced eyes',
+      pose: 'dynamic action pose, interacting with holograms',
+      special: 'digital effects, circuit patterns, purple glitch art',
+      hairStyle: 'sleek futuristic hair, tech-enhanced style',
     },
   },
-
   /**
-   * SEISMIC BRANDING INTEGRATION
-   * Multiple branded elements throughout the NFT
+   * SEISMIC BRANDING - INTEGRATED NATURALLY
    */
   seismicBranding: {
-    // Primary branding
-    logo: 'large visible Seismic logo prominently displayed on clothing or accessory',
-    crystal: 'glowing purple Seismic crystal gem integrated into design',
-    
-    // Secondary branding
-    patterns: 'Seismic geometric patterns in background, purple crystal formations',
-    effects: 'purple energy aura representing Seismic power, glowing accents',
-    watermark: 'small Seismic signature badge in corner',
-    
-    // Color identity
-    brandColors: 'signature Seismic purple (#8B5CF6), electric purple accents, crystal shimmer effects',
+    logo: 'Seismic logo prominently displayed on clothing or accessory',
+    crystal: 'purple glowing crystal gem element integrated naturally',
+    colors: 'signature purple (#8B5CF6) accents throughout design',
+    effects: 'subtle purple energy aura and glow effects',
   },
-
   /**
-   * TOPIC-BASED ELEMENTS
+   * ANIME-SPECIFIC SETTINGS
    */
-  topicElements: {
-    technology: {
-      background: 'futuristic tech lab with Seismic holographic displays, circuit board patterns with purple glow',
-      effects: 'floating Seismic tech icons, digital interfaces, glowing code streams with purple highlights',
-      accessories: 'Seismic branded tech gadgets, holographic Seismic logo, smart devices with purple screens',
-    },
-    business: {
-      background: 'luxury office with Seismic branding, city skyline with purple lights, corporate penthouse',
-      effects: 'rising success charts with Seismic logo, dollar signs, gold coins with crystal emblem',
-      accessories: 'Seismic executive briefcase, luxury watch with logo, designer Seismic business card',
-    },
-    design: {
-      background: 'creative studio with Seismic art pieces, colorful workspace with logo displays',
-      effects: 'artistic paint splashes in purple, creative tools with branding, design swirls',
-      accessories: 'Seismic branded design tablet, artistic tools with purple glow, creative portfolio',
-    },
-    finance: {
-      background: 'crypto trading floor with Seismic charts, blockchain visualization in purple',
-      effects: 'floating crypto coins with Seismic logo, blockchain nodes glowing purple, market graphs',
-      accessories: 'Seismic crypto wallet, digital currencies with crystal symbol, gold bars branded',
-    },
-    lifestyle: {
-      background: 'trendy location with Seismic billboards, aesthetic scene with purple neon signs',
-      effects: 'lifestyle elements with branding, Instagram-worthy backdrop with logos, aesthetic vibes',
-      accessories: 'Seismic lifestyle products, branded coffee cup, designer items with logo',
-    },
-    gaming: {
-      background: 'gaming setup with Seismic monitors, RGB lights in purple, game posters with logo',
-      effects: 'game UI elements with Seismic branding, level-up effects in purple, achievement badges',
-      accessories: 'Seismic gaming headset, controller with logo, esports jersey branded',
-    },
+  animeSettings: {
+    lineArt: 'bold clean outlines, anime line art style',
+    shading: 'cel shading, flat color anime aesthetic',
+    eyes: 'expressive anime eyes, large and detailed',
+    features: 'clean anime facial features, stylized proportions',
   },
-
   /**
-   * BACKGROUND STYLES
-   * Web3 standard backgrounds
+   * BACKGROUND STYLES - SIMPLE AND CLEAN
    */
   backgrounds: {
-    solid: 'solid vibrant color background, clean flat design, NFT collection standard',
-    gradient: 'smooth purple to blue gradient background, Seismic brand colors, premium feel',
-    geometric: 'geometric Seismic pattern background, crystal formations, abstract shapes',
-    cosmic: 'cosmic space background with purple nebula, stars and Seismic constellation patterns',
-    urban: 'stylized city background with Seismic neon signs, urban aesthetic with purple lights',
+    solid: 'solid gradient background, purple to blue fade, clean simple design',
+    cosmic: 'space background with stars, purple nebula, cosmic aesthetic',
+    geometric: 'abstract geometric patterns, Seismic crystal shapes, modern design',
+    urban: 'stylized city backdrop, neon purple lights, urban anime aesthetic',
   },
-
   /**
    * COLOR SCHEMES
    */
   colorSchemes: {
-    positive: 'vibrant warm colors, golden yellows, bright oranges, with signature Seismic purple accents',
-    neutral: 'professional cool tones, blues and grays, balanced with Seismic purple highlights',
-    negative: 'dramatic dark colors, deep purples and blacks, moody with glowing Seismic crystal lights',
+    positive: 'vibrant bright colors, warm tones, cheerful palette with purple accents',
+    neutral: 'balanced cool colors, blues and purples, professional anime palette',
+    negative: 'dark moody colors, deep purples and blacks, dramatic lighting',
   },
-
   /**
-   * ENGAGEMENT-BASED EFFECTS
-   */
-  engagementEffects: {
-    high: 'intense Seismic energy aura, multiple purple glowing effects, dynamic pose, powerful presence',
-    medium: 'balanced Seismic glow, moderate energy effects, stable confident look',
-    low: 'subtle Seismic shimmer, calm presence, minimalist purple accents',
-  },
-
-  /**
-   * NEGATIVE PROMPT - Avoid unwanted elements
+   * NEGATIVE PROMPT - ANIME OPTIMIZED
    */
   negativePrompt: [
-    'ugly', 'blurry', 'low quality', 'distorted', 'deformed', 'disfigured',
-    'bad anatomy', 'extra limbs', 'missing limbs', 'poorly drawn',
+    'realistic', 'photo', 'photograph', 'photorealistic', '3D render',
+    'ugly', 'blurry', 'low quality', 'distorted', 'deformed',
+    'bad anatomy', 'extra limbs', 'poorly drawn face',
+    'bad proportions', 'gross', 'disfigured',
     'text', 'watermark', 'signature', 'username',
-    'realistic photo', 'photograph', 'photorealistic',
-    'cropped', 'out of frame', 'split image', 'multiple views',
-    'nude', 'nsfw', 'inappropriate', 'violent', 'gore',
+    'multiple views', 'split image', 'out of frame',
+    'western cartoon', 'disney style',
   ].join(', '),
-
   /**
-   * QUALITY MODIFIERS
+   * QUALITY MODIFIERS - ANIME FOCUSED
    */
   qualityModifiers: [
-    'premium NFT collection quality',
-    'iconic Web3 avatar design',
-    'collectible digital art',
-    'trending NFT style',
-    'high value NFT aesthetic',
-    'OpenSea featured quality',
-    'professional NFT artwork',
-    'unique character design',
-    'vibrant bold colors',
-    'sharp clean details',
+    'high quality anime art',
+    'professional anime illustration',
+    'clean line art',
+    'vibrant colors',
+    'detailed anime character',
+    'trending on pixiv',
+    'NFT collection quality',
+    'anime PFP style',
+    'collectible character art',
   ].join(', '),
-
   /**
-   * PFP COMPOSITION RULES
-   * Essential for good Web3 PFP NFTs
+   * COMPOSITION - ANIME PFP STYLE
    */
   composition: {
-    framing: 'bust portrait, head and shoulders visible, centered composition, faces camera directly',
-    focus: 'character in sharp focus, clear facial features, detailed expression',
-    style: 'iconic memorable design, instantly recognizable, works as small profile picture',
+    framing: 'bust portrait, head and upper torso, centered composition',
+    angle: 'front-facing or slight angle, clear view of face',
+    focus: 'sharp focus on character, anime style portrait',
   },
 };
-
 /**
- * PRESET STYLES
- * Quick presets for different Web3 aesthetics
+ * ANIME NFT PRESETS
  */
 export const NFTPresets = {
-  // Bored Ape style with Seismic branding
-  apeStyle: {
-    baseStyle: 'cartoon ape character NFT, thick black outlines, solid flat colors, Bored Ape aesthetic, Seismic branded clothing',
-    background: 'solid color background, Web3 standard',
+  // Monad Cards style (like your examples)
+  monadStyle: {
+    baseStyle: 'anime character portrait, clean cel shaded art, bold outlines, Monad Cards aesthetic, vibrant colors, professional anime illustration',
+    background: 'gradient background purple to blue, simple clean design',
   },
-
-  // Azuki anime style with Seismic elements
-  animeStyle: {
-    baseStyle: 'anime character NFT, clean cel-shaded art, bold lines, Azuki-inspired, wearing Seismic accessories',
-    background: 'gradient background with subtle Seismic patterns',
+  // Azuki style
+  azukiStyle: {
+    baseStyle: 'anime character portrait, street fashion aesthetic, urban cool style, clean modern anime art, detailed outfit',
+    background: 'minimal gradient background, Japanese aesthetic',
   },
-
-  // Doodles cute style with Seismic theme
-  doodleStyle: {
-    baseStyle: 'cute colorful character NFT, friendly kawaii aesthetic, pastel colors, Doodles-inspired, Seismic branded items',
-    background: 'soft gradient background with floating Seismic crystals',
-  },
-
-  // CyberKongz tech style with Seismic tech
-  cyborgStyle: {
-    baseStyle: 'cyberpunk robot character NFT, futuristic design, metallic textures, tech-enhanced, Seismic purple neon accents',
-    background: 'digital matrix background with Seismic code patterns',
-  },
-
-  // Cool Cats urban style with Seismic streetwear
-  streetStyle: {
-    baseStyle: 'cool cat character NFT, street fashion, bold graphic style, urban aesthetic, wearing Seismic branded streetwear',
-    background: 'graffiti wall background with Seismic tags',
-  },
-
-  // Pudgy Penguins cute style with Seismic accessories
-  cuteStyle: {
-    baseStyle: 'adorable penguin character NFT, chubby cute design, friendly face, Pudgy-inspired, with Seismic accessories',
-    background: 'winter scene with Seismic ice crystals',
+  // Murakami style
+  murakamiStyle: {
+    baseStyle: 'cute anime character, colorful playful design, kawaii aesthetic, simple shapes, bold colors',
+    background: 'solid bright color background, pop art style',
   },
 };
-
 /**
- * HELPER: Get complete prompt configuration
+ * HELPER: Get anime prompt configuration
  */
 export function getPromptConfig(personality: any) {
   const tone = personality.tone;
   const sentiment = personality.sentiment;
-  const engagement = personality.engagement;
-
   return {
     artStyle: NFTConfig.artStyles[tone as keyof typeof NFTConfig.artStyles],
     features: NFTConfig.characterFeatures[tone as keyof typeof NFTConfig.characterFeatures],
     colors: NFTConfig.colorSchemes[sentiment as keyof typeof NFTConfig.colorSchemes],
-    effects: NFTConfig.engagementEffects[engagement as keyof typeof NFTConfig.engagementEffects],
+    anime: NFTConfig.animeSettings,
     branding: NFTConfig.seismicBranding,
     composition: NFTConfig.composition,
   };
+}
+/**
+ * CONSTRUCT FULL PROMPT - MONAD CARDS STYLE
+ * Edited to incorporate user's PFP description for img2img generation
+ * Use img2img mode with v1-5-pruned-emaonly.safetensors locally
+ * pfpDescription: A textual description of the user's X PFP (e.g., "purple frog smoking a cigar")
+ * Obtain pfpDescription by viewing the image (e.g., via AI analysis or manual description)
+ */
+export function constructMonadStylePrompt(username: string, personality: any, pfpDescription: string): string {
+  const config = getPromptConfig(personality);
+  // Build the prompt
+  let prompt = '';
+  // 1. Start with PFP as base for stylization (for img2img)
+  if (pfpDescription) {
+    prompt += `stylized anime NFT version of ${pfpDescription}, `;
+  }
+  // 2. Base style - MOST IMPORTANT
+  prompt += 'anime character portrait, ';
+  prompt += 'clean cel shaded illustration, ';
+  prompt += 'bold black outlines, ';
+  // 3. Art style based on personality
+  prompt += `${config.artStyle}, `;
+  // 4. Character features
+  prompt += `${config.features.outfit}, `;
+  prompt += `${config.features.hairStyle}, `;
+  prompt += `${config.features.expression}, `;
+  // 5. Seismic branding
+  prompt += 'Seismic logo visible on clothing, ';
+  prompt += 'purple glowing crystal element, ';
+  // 6. Background
+  prompt += 'gradient purple to blue background, ';
+  // 7. Quality tags
+  prompt += 'high quality anime art, professional illustration, vibrant colors, NFT collection style, trending on pixiv';
+  return prompt;
 }
