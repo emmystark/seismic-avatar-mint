@@ -2,7 +2,17 @@ import { NextRequest, NextResponse } from 'next/server';
 import { StableDiffusion15Client } from '@/lib/stableDiffusion15Client';
 import { ProfileAnalysis, NFTMetadata } from '@/types';
 
+
+
+import { ComfyUIClient } from '@/lib/comfyuiClient';
+
+
+
+
+
 export async function POST(req: NextRequest) {
+  const client = new ComfyUIClient();
+  
   try {
     const { analysis, customStyle } = await req.json();
 
@@ -27,7 +37,9 @@ export async function POST(req: NextRequest) {
 
     // Convert Blob to base64
     const base64Image = await sd15Client.blobToBase64(imageBlob);
-    const imageUrl = `data:image/png;base64,${base64Image}`;
+    // const imageUrl = `data:image/png;base64,${base64Image}`;
+
+    const imageUrl = await client.generateNFTImage(analysis);
 
     // Create NFT metadata
     const nftMetadata: NFTMetadata = {

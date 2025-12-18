@@ -193,7 +193,7 @@ export class StableDiffusion15Client {
       try {
         const resp = await axios.post(`${this.apiUrl}/sdapi/v1/txt2img`, payload, {
           headers: { 'Content-Type': 'application/json' },
-          timeout: 120000, // 2 minutes
+          timeout: 1800000, // 30 minutes
         });
 
         if (resp.status !== 200) {
