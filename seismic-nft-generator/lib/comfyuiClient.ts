@@ -27,7 +27,7 @@ export class ComfyUIClient {
       },
       "4": {
         "inputs": {
-          "ckpt_name": "v1-5-pruned-emaonly.safetensors"
+          "ckpt_name": "dreamshaper_8.safetensors"
         },
         "class_type": "CheckpointLoaderSimple"
       },
