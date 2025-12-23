@@ -2,11 +2,21 @@
 
 import { useState, useRef } from 'react';
 
+interface FacialFeatures {
+  hairColor: string;
+  skinTone: string;
+  eyeColor: string;
+  noseShape: string;
+  earShape: string;
+}
+
 export default function GeneratePage() {
   const [referenceImage, setReferenceImage] = useState<string | null>(null);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [analyzing, setAnalyzing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [extractedFeatures, setExtractedFeatures] = useState<FacialFeatures | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -19,14 +29,52 @@ export default function GeneratePage() {
       const base64 = event.target?.result as string;
       setReferenceImage(base64);
       setError(null);
+      setExtractedFeatures(null);
     };
     reader.readAsDataURL(file);
+  };
+
+  const analyzeFeatures = async () => {
+    if (!referenceImage) return;
+
+    setAnalyzing(true);
+    setError(null);
+
+    try {
+      const response = await fetch('/api/analyze-features', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          imageBase64: referenceImage,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Feature analysis failed');
+      }
+
+      setExtractedFeatures(data.features);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to analyze features');
+      console.error(err);
+    } finally {
+      setAnalyzing(false);
+    }
   };
 
   const handleGenerate = async () => {
     if (!referenceImage) {
       setError('Please upload a reference image first');
       return;
+    }
+
+    // Analyze features first if not already done
+    if (!extractedFeatures) {
+      await analyzeFeatures();
     }
 
     setLoading(true);
@@ -41,6 +89,7 @@ export default function GeneratePage() {
         },
         body: JSON.stringify({
           referenceImage,
+          features: extractedFeatures,
         }),
       });
 
@@ -71,18 +120,17 @@ export default function GeneratePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-900 via-green-900 to-blue-900 p-8">
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-5xl font-bold text-white mb-2">
             🎄 Seismic Christmas Avatar Generator
           </h1>
           <p className="text-gray-300 text-lg">
-            Transform your photo into a festive NFT avatar with Christmas trees, lights & snow
+            AI-powered facial feature preservation with Christmas magic ✨
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Left Column - Upload */}
+          {/* Left Column */}
           <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 shadow-2xl">
             <h2 className="text-2xl font-bold text-white mb-4">📸 Upload Your Photo</h2>
             
@@ -107,9 +155,34 @@ export default function GeneratePage() {
               </div>
             )}
 
+            {/* Feature Analysis Button */}
+            {referenceImage && !extractedFeatures && (
+              <button
+                onClick={analyzeFeatures}
+                disabled={analyzing}
+                className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 disabled:from-gray-600 disabled:to-gray-700 text-white font-bold py-3 px-6 rounded-lg transition-all mb-4"
+              >
+                {analyzing ? '🔍 Analyzing Features...' : '🧠 Analyze Features with AI'}
+              </button>
+            )}
+
+            {/* Extracted Features Display */}
+            {extractedFeatures && (
+              <div className="mb-6 bg-green-500/20 border border-green-500/50 rounded-lg p-4">
+                <h3 className="text-white font-bold mb-3">✅ Extracted Features:</h3>
+                <div className="text-gray-200 text-sm space-y-1">
+                  <p><strong>Hair:</strong> {extractedFeatures.hairColor}</p>
+                  <p><strong>Skin:</strong> {extractedFeatures.skinTone}</p>
+                  <p><strong>Eyes:</strong> {extractedFeatures.eyeColor}</p>
+                  <p><strong>Nose:</strong> {extractedFeatures.noseShape}</p>
+                  <p><strong>Ears:</strong> {extractedFeatures.earShape}</p>
+                </div>
+              </div>
+            )}
+
             <button
               onClick={handleGenerate}
-              disabled={!referenceImage || loading}
+              disabled={!referenceImage || loading || analyzing}
               className="w-full bg-gradient-to-r from-green-600 to-red-600 hover:from-green-700 hover:to-red-700 disabled:from-gray-600 disabled:to-gray-700 text-white font-bold py-4 px-6 rounded-lg transition-all shadow-lg text-lg"
             >
               {loading ? '🎄 Generating Christmas Magic...' : '🎅 Generate Christmas Avatar'}
@@ -123,43 +196,44 @@ export default function GeneratePage() {
 
             {/* Info Section */}
             <div className="mt-6 space-y-4">
-              <div className="bg-green-500/20 border border-green-500/50 rounded-lg p-4">
-                <h3 className="text-white font-bold mb-2">✨ What You'll Get:</h3>
+              <div className="bg-blue-500/20 border border-blue-500/50 rounded-lg p-4">
+                <h3 className="text-white font-bold mb-2">🤖 AI-Powered:</h3>
                 <ul className="text-gray-200 text-sm space-y-1">
-                  <li>• Christmas trees with decorations</li>
-                  <li>• Glowing string lights</li>
-                  <li>• Falling snowflakes</li>
-                  <li>• Winter wonderland background</li>
-                  <li>• SEISMIC official watermark</li>
+                  <li>• Gemini 2.0 Flash analyzes your face</li>
+                  <li>• Extracts exact facial features</li>
+                  <li>• Preserves your unique look</li>
+                  <li>• 100% FREE AI analysis</li>
                 </ul>
               </div>
 
-              <div className="bg-blue-500/20 border border-blue-500/50 rounded-lg p-4">
-                <h3 className="text-white font-bold mb-2">⚙️ Optimized Settings:</h3>
+              <div className="bg-green-500/20 border border-green-500/50 rounded-lg p-4">
+                <h3 className="text-white font-bold mb-2">🎄 Christmas Magic:</h3>
                 <ul className="text-gray-200 text-sm space-y-1">
-                  <li>• CFG Scale: 10</li>
-                  <li>• Steps: 20</li>
-                  <li>• Denoising: 0.46</li>
-                  <li>• Sampler: DPM++ 2M Karras</li>
-                  <li>• Model: DreamShaper 8</li>
+                  <li>• Winter wonderland background</li>
+                  <li>• Glowing Christmas lights</li>
+                  <li>• Falling snowflakes</li>
+                  <li>• SEISMIC watermark</li>
                 </ul>
               </div>
             </div>
           </div>
 
-          {/* Right Column - Generated Result */}
+          {/* Right Column */}
           <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 shadow-2xl">
             <h2 className="text-2xl font-bold text-white mb-4">✨ Your Christmas Avatar</h2>
             
-            {loading && (
+            {(loading || analyzing) && (
               <div className="flex flex-col items-center justify-center h-96 bg-black/20 rounded-lg">
                 <div className="relative mb-6">
                   <div className="animate-spin rounded-full h-20 w-20 border-b-4 border-green-500"></div>
                   <div className="absolute top-0 left-0 animate-spin rounded-full h-20 w-20 border-t-4 border-red-500" style={{animationDirection: 'reverse', animationDuration: '1.5s'}}></div>
                 </div>
-                <p className="text-white font-bold text-xl mb-2">🎄 Creating your Christmas avatar...</p>
-                <p className="text-gray-300 text-sm">Adding Christmas trees, lights & snow ❄️</p>
-                <p className="text-gray-400 text-xs mt-4">This usually takes 15-30 seconds</p>
+                <p className="text-white font-bold text-xl mb-2">
+                  {analyzing ? '🧠 AI analyzing your features...' : '🎄 Creating your Christmas avatar...'}
+                </p>
+                <p className="text-gray-300 text-sm">
+                  {analyzing ? 'Extracting hair, skin, eyes, nose, ears...' : 'Adding Christmas trees, lights & snow ❄️'}
+                </p>
               </div>
             )}
 
@@ -179,6 +253,7 @@ export default function GeneratePage() {
                     onClick={() => {
                       setGeneratedImage(null);
                       setReferenceImage(null);
+                      setExtractedFeatures(null);
                     }}
                     className="w-full bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-bold py-3 px-6 rounded-lg transition-all"
                   >
@@ -188,45 +263,17 @@ export default function GeneratePage() {
               </div>
             )}
 
-            {!generatedImage && !loading && (
+            {!generatedImage && !loading && !analyzing && (
               <div className="flex flex-col items-center justify-center h-96 border-2 border-dashed border-white/30 rounded-lg bg-black/20">
                 <div className="text-center px-6">
                   <p className="text-gray-300 text-xl mb-3">🎁 Your Christmas avatar will appear here</p>
                   <p className="text-gray-400 text-sm mb-4">
-                    Upload a photo and click generate to create your festive NFT avatar
+                    Upload a photo → AI analyzes features → Generate festive NFT
                   </p>
                   <div className="text-6xl mb-4">🎄</div>
-                  <p className="text-gray-500 text-xs">
-                    Complete with Christmas trees, glowing lights, and falling snow!
-                  </p>
                 </div>
               </div>
             )}
-          </div>
-        </div>
-
-        {/* Feature Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
-          <div className="bg-white/10 backdrop-blur-lg rounded-lg p-4 border border-white/20 text-center">
-            <div className="text-3xl mb-2">🎄</div>
-            <h3 className="text-white font-bold mb-2">Christmas Background</h3>
-            <p className="text-gray-300 text-sm">
-              Decorated trees, glowing lights, and falling snow in every avatar
-            </p>
-          </div>
-          <div className="bg-white/10 backdrop-blur-lg rounded-lg p-4 border border-white/20 text-center">
-            <div className="text-3xl mb-2">🏷️</div>
-            <h3 className="text-white font-bold mb-2">SEISMIC Branding</h3>
-            <p className="text-gray-300 text-sm">
-              Official watermark included for authenticity
-            </p>
-          </div>
-          <div className="bg-white/10 backdrop-blur-lg rounded-lg p-4 border border-white/20 text-center">
-            <div className="text-3xl mb-2">⚡</div>
-            <h3 className="text-white font-bold mb-2">Fast Generation</h3>
-            <p className="text-gray-300 text-sm">
-              Optimized for speed - ready in 15-30 seconds
-            </p>
           </div>
         </div>
       </div>
